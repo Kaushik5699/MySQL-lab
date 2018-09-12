@@ -1,0 +1,286 @@
+mysql> CREATE TABLE `Customers` (
+    ->   `CID` mediumint,
+    ->   `Cname` varchar(255) default NULL,
+    ->   `Age` mediumint default NULL,
+    ->   `Address` varchar(255) default NULL,
+    ->   `City` varchar(255),
+    ->   `PostalCode` varchar(10) default NULL,
+    ->   `Gender` varchar(255) default NULL,
+    ->   `Country` varchar(100) default NULL,
+    ->   PRIMARY KEY (`CID`)
+    -> );
+Query OK, 0 rows affected (0.25 sec)
+
+mysql> DESC Customers;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| CID        | mediumint(9) | NO   | PRI | NULL    |       |
+| Cname      | varchar(255) | YES  |     | NULL    |       |
+| Age        | mediumint(9) | YES  |     | NULL    |       |
+| Address    | varchar(255) | YES  |     | NULL    |       |
+| City       | varchar(255) | YES  |     | NULL    |       |
+| PostalCode | varchar(10)  | YES  |     | NULL    |       |
+| Gender     | varchar(255) | YES  |     | NULL    |       |
+| Country    | varchar(100) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO `Customers` (`CID`,`Cname`,`Age`,`Address`,`City`,`PostalCode`,`Gender`,`Country`) VALUES (1,"Quinn",19,"759-3074 Ridiculus Street","Guwahati","442577","M","India"),
+->(2,"William",23,"Ap #573-5436 Leo. Street","Aizwal","890773","F","India"),
+->(3,"Shana",27,"P.O. Box 832, 8386 Lectus Av.","Aizwal","584716","F","India"),
+->(4,"Kalia",29,"4949 Imperdiet, Road","Chandannagar","949456","M","India"),
+->(5,"Ivy",29,"Ap #197-6249 Non, Av.","Hoshiarpur","933239","M","India"),
+->(6,"Garth",19,"294-4571 Ante Rd.","Delhi","602446","M","India"),
+->(7,"Alice",30,"7227 Ligula St.","Itanagar","140165","F","India"),
+->(8,"Tarik",23,"475-3744 Id Rd.","Port Blair","180059","M","India"),
+->(9,"Timothy",23,"288-6697 Congue, Rd.","Shimla","105246","M","India"),
+->(10,"Davis",22,"124-6012 Ultrices Rd.","Chishtian Mandi","351993","M","India");
+
+mysql> SELECT * FROM Customers;
++-----+---------+------+-------------------------------+-----------------+------------+--------+---------+
+| CID | Cname   | Age  | Address                       | City            | PostalCode | Gender | Country |
++-----+---------+------+-------------------------------+-----------------+------------+--------+---------+
+|   1 | Quinn   |   19 | 759-3074 Ridiculus Street     | Guwahati        | 442577     | M      | India   |
+|   2 | William |   23 | Ap #573-5436 Leo. Street      | Aizwal          | 890773     | F      | India   |
+|   3 | Shana   |   27 | P.O. Box 832, 8386 Lectus Av. | Aizwal          | 584716     | F      | India   |
+|   4 | Kalia   |   29 | 4949 Imperdiet, Road          | Chandannagar    | 949456     | M      | India   |
+|   5 | Ivy     |   29 | Ap #197-6249 Non, Av.         | Hoshiarpur      | 933239     | M      | India   |
+|   6 | Garth   |   19 | 294-4571 Ante Rd.             | Delhi           | 602446     | M      | India   |
+|   7 | Alice   |   30 | 7227 Ligula St.               | Itanagar        | 140165     | F      | India   |
+|   8 | Tarik   |   23 | 475-3744 Id Rd.               | Port Blair      | 180059     | M      | India   |
+|   9 | Timothy |   23 | 288-6697 Congue, Rd.          | Shimla          | 105246     | M      | India   |
+|  10 | Davis   |   22 | 124-6012 Ultrices Rd.         | Chishtian Mandi | 351993     | M      | India   |
++-----+---------+------+-------------------------------+-----------------+------------+--------+---------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Customers WHERE City = "Aizwal" or City = "Delhi" and Country = "India";
++-----+---------+------+-------------------------------+--------+------------+--------+---------+
+| CID | Cname   | Age  | Address                       | City   | PostalCode | Gender | Country |
++-----+---------+------+-------------------------------+--------+------------+--------+---------+
+|   2 | William |   23 | Ap #573-5436 Leo. Street      | Aizwal | 890773     | F      | India   |
+|   3 | Shana   |   27 | P.O. Box 832, 8386 Lectus Av. | Aizwal | 584716     | F      | India   |
+|   6 | Garth   |   19 | 294-4571 Ante Rd.             | Delhi  | 602446     | M      | India   |
++-----+---------+------+-------------------------------+--------+------------+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Customers WHERE Address = NULL;
+Empty set (0.00 sec)
+
+mysql> SELECT count(*) FROM Customers WHERE Gender = "F";
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SET @row_number = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT  *  FROM Customers WHERE City = "Aizwal" and @row_number < 4;
++-----+---------+------+-------------------------------+--------+------------+--------+---------+
+| CID | Cname   | Age  | Address                       | City   | PostalCode | Gender | Country |
++-----+---------+------+-------------------------------+--------+------------+--------+---------+
+|   2 | William |   23 | Ap #573-5436 Leo. Street      | Aizwal | 890773     | F      | India   |
+|   3 | Shana   |   27 | P.O. Box 832, 8386 Lectus Av. | Aizwal | 584716     | F      | India   |
++-----+---------+------+-------------------------------+--------+------------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Customers ORDER BY Age DESC;
++-----+---------+------+-------------------------------+-----------------+------------+--------+---------+
+| CID | Cname   | Age  | Address                       | City            | PostalCode | Gender | Country |
++-----+---------+------+-------------------------------+-----------------+------------+--------+---------+
+|   7 | Alice   |   30 | 7227 Ligula St.               | Itanagar        | 140165     | F      | India   |
+|   4 | Kalia   |   29 | 4949 Imperdiet, Road          | Chandannagar    | 949456     | M      | India   |
+|   5 | Ivy     |   29 | Ap #197-6249 Non, Av.         | Hoshiarpur      | 933239     | M      | India   |
+|   3 | Shana   |   27 | P.O. Box 832, 8386 Lectus Av. | Aizwal          | 584716     | F      | India   |
+|   2 | William |   23 | Ap #573-5436 Leo. Street      | Aizwal          | 890773     | F      | India   |
+|   8 | Tarik   |   23 | 475-3744 Id Rd.               | Port Blair      | 180059     | M      | India   |
+|   9 | Timothy |   23 | 288-6697 Congue, Rd.          | Shimla          | 105246     | M      | India   |
+|  10 | Davis   |   22 | 124-6012 Ultrices Rd.         | Chishtian Mandi | 351993     | M      | India   |
+|   1 | Quinn   |   19 | 759-3074 Ridiculus Street     | Guwahati        | 442577     | M      | India   |
+|   6 | Garth   |   19 | 294-4571 Ante Rd.             | Delhi           | 602446     | M      | India   |
++-----+---------+------+-------------------------------+-----------------+------------+--------+---------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Customers WHERE Cname LIKE "%a" or Cname LIKE "%h";
++-----+-------+------+-------------------------------+--------------+------------+--------+---------+
+| CID | Cname | Age  | Address                       | City         | PostalCode | Gender | Country |
++-----+-------+------+-------------------------------+--------------+------------+--------+---------+
+|   3 | Shana |   27 | P.O. Box 832, 8386 Lectus Av. | Aizwal       | 584716     | F      | India   |
+|   4 | Kalia |   29 | 4949 Imperdiet, Road          | Chandannagar | 949456     | M      | India   |
+|   6 | Garth |   19 | 294-4571 Ante Rd.             | Delhi        | 602446     | M      | India   |
++-----+-------+------+-------------------------------+--------------+------------+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Customers WHERE Country = "India" and PostalCode LIKE "5%" and (Cname LIKE "S%" or Cname LIKE "T%" or Cname LIKE "P%");
++-----+-------+------+-------------------------------+--------+------------+--------+---------+
+| CID | Cname | Age  | Address                       | City   | PostalCode | Gender | Country |
++-----+-------+------+-------------------------------+--------+------------+--------+---------+
+|   3 | Shana |   27 | P.O. Box 832, 8386 Lectus Av. | Aizwal | 584716     | F      | India   |
++-----+-------+------+-------------------------------+--------+------------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Customers WHERE City = "Shimla" or City = "Guwahati" or City = "Delhi";
++-----+---------+------+---------------------------+----------+------------+--------+---------+
+| CID | Cname   | Age  | Address                   | City     | PostalCode | Gender | Country |
++-----+---------+------+---------------------------+----------+------------+--------+---------+
+|   1 | Quinn   |   19 | 759-3074 Ridiculus Street | Guwahati | 442577     | M      | India   |
+|   6 | Garth   |   19 | 294-4571 Ante Rd.         | Delhi    | 602446     | M      | India   |
+|   9 | Timothy |   23 | 288-6697 Congue, Rd.      | Shimla   | 105246     | M      | India   |
++-----+---------+------+---------------------------+----------+------------+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> create table Emp (
+    -> eno INT,
+    -> Ename VARCHAR(50),
+    -> Phone_no VARCHAR(50),
+    -> Desg VARCHAR(50),
+    -> Salary INT,
+    -> Age INT,
+    -> Country VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.39 sec)
+
+mysql> 
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (1, 'Brnaba', '6834024744', 'Engineering', 243123, 50, 'Sweden');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (2, 'Clementius', '9466701571', 'Training', 161547, 54, 'Japan');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (3, 'Erin', '6812746269', 'Human Resources', 154192, 51, 'Peru');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (4, 'Carlina', '3217607567', 'Training', 293421, 36, 'North Korea');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (5, 'Gordon', '6778804698', 'Sales', 228795, 37, 'Bolivia');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (6, 'Rubetta', '8446943838', 'Accounting', 229484, 30, 'Turkmenistan');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (7, 'Ambrosio', '1431878484', 'Training', 35934, 52, 'Guatemala');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (8, 'Maighdiln', '3613365379', 'Product Management', 281766, 48, 'Philippines');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (9, 'Kerby', '2285822772', 'Engineering', 199059, 53, 'Malawi');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT into Emp (eno, Ename, Phone_no, Desg, Salary, Age, Country) values (10, 'Blake', '1073541963', 'Human Resources', 131530, 54, 'Egypt');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM Emp;
++------+------------+------------+--------------------+--------+------+--------------+
+| eno  | Ename      | Phone_no   | Desg               | Salary | Age  | Country      |
++------+------------+------------+--------------------+--------+------+--------------+
+|    1 | Brnaba     | 6834024744 | Engineering        | 243123 |   50 | Sweden       |
+|    2 | Clementius | 9466701571 | Training           | 161547 |   54 | Japan        |
+|    3 | Erin       | 6812746269 | Human Resources    | 154192 |   51 | Peru         |
+|    4 | Carlina    | 3217607567 | Training           | 293421 |   36 | North Korea  |
+|    5 | Gordon     | 6778804698 | Sales              | 228795 |   37 | Bolivia      |
+|    6 | Rubetta    | 8446943838 | Accounting         | 229484 |   30 | Turkmenistan |
+|    7 | Ambrosio   | 1431878484 | Training           |  35934 |   52 | Guatemala    |
+|    8 | Maighdiln  | 3613365379 | Product Management | 281766 |   48 | Philippines  |
+|    9 | Kerby      | 2285822772 | Engineering        | 199059 |   53 | Malawi       |
+|   10 | Blake      | 1073541963 | Human Resources    | 131530 |   54 | Egypt        |
++------+------------+------------+--------------------+--------+------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Emp WHERE Salary < 100000;
++------+----------+------------+----------+--------+------+-----------+
+| eno  | Ename    | Phone_no   | Desg     | Salary | Age  | Country   |
++------+----------+------------+----------+--------+------+-----------+
+|    7 | Ambrosio | 1431878484 | Training |  35934 |   52 | Guatemala |
++------+----------+------------+----------+--------+------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT eno as Eid, Ename as Emp_name FROM Emp;
++------+------------+
+| Eid  | Emp_name   |
++------+------------+
+|    1 | Brnaba     |
+|    2 | Clementius |
+|    3 | Erin       |
+|    4 | Carlina    |
+|    5 | Gordon     |
+|    6 | Rubetta    |
+|    7 | Ambrosio   |
+|    8 | Maighdiln  |
+|    9 | Kerby      |
+|   10 | Blake      |
++------+------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Emp WHERE Salary BETWEEN 100000 and 200000 and (Not eno = 1 or not eno = 2);
++------+------------+------------+-----------------+--------+------+---------+
+| eno  | Ename      | Phone_no   | Desg            | Salary | Age  | Country |
++------+------------+------------+-----------------+--------+------+---------+
+|    2 | Clementius | 9466701571 | Training        | 161547 |   54 | Japan   |
+|    3 | Erin       | 6812746269 | Human Resources | 154192 |   51 | Peru    |
+|    9 | Kerby      | 2285822772 | Engineering     | 199059 |   53 | Malawi  |
+|   10 | Blake      | 1073541963 | Human Resources | 131530 |   54 | Egypt   |
++------+------------+------------+-----------------+--------+------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Emp WHERE Salary BETWEEN 100000 and 200000 and (Not eno = 1 and not eno = 2);
++------+-------+------------+-----------------+--------+------+---------+
+| eno  | Ename | Phone_no   | Desg            | Salary | Age  | Country |
++------+-------+------------+-----------------+--------+------+---------+
+|    3 | Erin  | 6812746269 | Human Resources | 154192 |   51 | Peru    |
+|    9 | Kerby | 2285822772 | Engineering     | 199059 |   53 | Malawi  |
+|   10 | Blake | 1073541963 | Human Resources | 131530 |   54 | Egypt   |
++------+-------+------------+-----------------+--------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT Desg,Ename FROM Emp WHERE Ename LIKE "A%" and length(Ename) > 3;
++----------+----------+
+| Desg     | Ename    |
++----------+----------+
+| Training | Ambrosio |
++----------+----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT DISTINCT Country FROM Emp;
++--------------+
+| Country      |
++--------------+
+| Sweden       |
+| Japan        |
+| Peru         |
+| North Korea  |
+| Bolivia      |
+| Turkmenistan |
+| Guatemala    |
+| Philippines  |
+| Malawi       |
+| Egypt        |
++--------------+
+10 rows in set (0.00 sec)
+
+mysql> UPDATE Emp SET Salary = Salary*0.25 WHERE Salary < 200000;
+Query OK, 5 rows affected (0.05 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> SELECT * FROM Emp;
++------+------------+------------+--------------------+--------+------+--------------+
+| eno  | Ename      | Phone_no   | Desg               | Salary | Age  | Country      |
++------+------------+------------+--------------------+--------+------+--------------+
+|    1 | Brnaba     | 6834024744 | Engineering        | 243123 |   50 | Sweden       |
+|    2 | Clementius | 9466701571 | Training           |  40387 |   54 | Japan        |
+|    3 | Erin       | 6812746269 | Human Resources    |  38548 |   51 | Peru         |
+|    4 | Carlina    | 3217607567 | Training           | 293421 |   36 | North Korea  |
+|    5 | Gordon     | 6778804698 | Sales              | 228795 |   37 | Bolivia      |
+|    6 | Rubetta    | 8446943838 | Accounting         | 229484 |   30 | Turkmenistan |
+|    7 | Ambrosio   | 1431878484 | Training           |   8984 |   52 | Guatemala    |
+|    8 | Maighdiln  | 3613365379 | Product Management | 281766 |   48 | Philippines  |
+|    9 | Kerby      | 2285822772 | Engineering        |  49765 |   53 | Malawi       |
+|   10 | Blake      | 1073541963 | Human Resources    |  32883 |   54 | Egypt        |
++------+------------+------------+--------------------+--------+------+--------------+
+10 rows in set (0.01 sec)
+
+

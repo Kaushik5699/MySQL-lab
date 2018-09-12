@@ -1,0 +1,232 @@
+1.
+mysql> create table sub(name varchar(8), age int(5), mark1 int(4), mark2 int(4), mark3 int(4));
+Query OK, 0 rows affected (0.04 sec)
+
+2.
+mysql> insert into sub values("Raj",21,67,89,78);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sub values("Kunal",22,88,90,45);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sub values("Mahesh",22,90,56,70);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sub values("Ann",21,95,66,72);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sub values("Benica",20,85,45,78);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from sub;
++--------+------+-------+-------+-------+
+| name   | age  | mark1 | mark2 | mark3 |
++--------+------+-------+-------+-------+
+| Raj    |   21 |    67 |    89 |    78 |
+| Kunal  |   22 |    88 |    90 |    45 |
+| Mahesh |   22 |    90 |    56 |    70 |
+| Ann    |   21 |    95 |    66 |    72 |
+| Benica |   20 |    85 |    45 |    78 |
++--------+------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+3.
+mysql> alter table sub add column total int(5);
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from sub;
++--------+------+-------+-------+-------+-------+
+| name   | age  | mark1 | mark2 | mark3 | total |
++--------+------+-------+-------+-------+-------+
+| Raj    |   21 |    67 |    89 |    78 |  NULL |
+| Kunal  |   22 |    88 |    90 |    45 |  NULL |
+| Mahesh |   22 |    90 |    56 |    70 |  NULL |
+| Ann    |   21 |    95 |    66 |    72 |  NULL |
+| Benica |   20 |    85 |    45 |    78 |  NULL |
++--------+------+-------+-------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc sub;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| name  | varchar(8) | YES  |     | NULL    |       |
+| age   | int(5)     | YES  |     | NULL    |       |
+| mark1 | int(4)     | YES  |     | NULL    |       |
+| mark2 | int(4)     | YES  |     | NULL    |       |
+| mark3 | int(4)     | YES  |     | NULL    |       |
+| total | int(5)     | YES  |     | NULL    |       |
++-------+------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+4.
+mysql> update sub set age = 23 where name="Raj";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+5.
+mysql> delete from sub where name = "Mahesh";
+Query OK, 1 row affected (0.00 sec)
+
+6.
+mysql> alter table sub drop mark2;
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+7.
+mysql> alter table sub modify column mark3 int(6);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 4 rows affected (0.00 sec)
+
+8.
+mysql> delete from sub;
+Query OK, 4 rows affected (0.00 sec)
+
+mysql> select * from sub;
+Empty set (0.00 sec)
+
+9.
+mysql> drop table sub;
+Query OK, 0 rows affected (0.00 sec)
+
+
+			QUESTION-2
+1.
+mysql> create table flights(flno int(10) Primary key,
+    -> fromplace varchar(20),
+    -> toplace varchar(20),
+    -> distance int(5),
+    -> departs time,
+    -> arrives time);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc flights;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| flno      | int(10)     | NO   | PRI | NULL    |       |
+| fromplace | varchar(20) | YES  |     | NULL    |       |
+| toplace   | varchar(20) | YES  |     | NULL    |       |
+| distance  | int(5)      | YES  |     | NULL    |       |
+| departs   | time        | YES  |     | NULL    |       |
+| arrives   | time        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+2.
+mysql> insert into flights values(1643,"bangalore","Chennai",400,"06:30:00","08:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into flights values(1643,"Mumbai","Delhi",1000,"16:30:00","19:00:00");
+ERROR 1062 (23000): Duplicate entry '1643' for key 'PRIMARY'
+mysql> insert into flights values(2340,"Mumbai","Delhi",1000,"16:30:00","19:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into flights values(1783,"Gurgaon","Trivandrum",1800,"01:00:00","07:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into flights values(1289,"Guwahti","Allahabad",1200,"20:00:00","23:30:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into flights values(9825,"Hyderabad","Mangalore",800,"13:00:00","16:30:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from flights;
++------+-----------+------------+----------+----------+----------+
+| flno | fromplace | toplace    | distance | departs  | arrives  |
++------+-----------+------------+----------+----------+----------+
+| 1643 | bangalore | Chennai    |      400 | 06:30:00 | 08:00:00 |
+| 2340 | Mumbai    | Delhi      |     1000 | 16:30:00 | 19:00:00 |
+| 1783 | Gurgaon   | Trivandrum |     1800 | 01:00:00 | 07:00:00 |
+| 1289 | Guwahti   | Allahabad  |     1200 | 20:00:00 | 23:30:00 |
+| 9825 | Hyderabad | Mangalore  |      800 | 13:00:00 | 16:30:00 |
++------+-----------+------------+----------+----------+----------+
+5 rows in set (0.00 sec)
+
+3.
+mysql> alter table flights add column price int(10);
+Query OK, 5 rows affected (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc flights;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| flno      | int(10)     | NO   | PRI | NULL    |       |
+| fromplace | varchar(20) | YES  |     | NULL    |       |
+| toplace   | varchar(20) | YES  |     | NULL    |       |
+| distance  | int(5)      | YES  |     | NULL    |       |
+| departs   | time        | YES  |     | NULL    |       |
+| arrives   | time        | YES  |     | NULL    |       |
+| price     | int(10)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+4.
+mysql> delete from flights where flno = 1783;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from flights;
++------+-----------+-----------+----------+----------+----------+-------+
+| flno | fromplace | toplace   | distance | departs  | arrives  | price |
++------+-----------+-----------+----------+----------+----------+-------+
+| 1643 | bangalore | Chennai   |      400 | 06:30:00 | 08:00:00 |  NULL |
+| 2340 | Mumbai    | Delhi     |     1000 | 16:30:00 | 19:00:00 |  NULL |
+| 1289 | Guwahti   | Allahabad |     1200 | 20:00:00 | 23:30:00 |  NULL |
+| 9825 | Hyderabad | Mangalore |      800 | 13:00:00 | 16:30:00 |  NULL |
++------+-----------+-----------+----------+----------+----------+-------+
+4 rows in set (0.00 sec)
+
+5.
+mysql> alter table flights drop column distance;
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+6.
+mysql> update flights set price = 1900 where flno = 1643;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from flights;
++------+-----------+-----------+----------+----------+-------+
+| flno | fromplace | toplace   | departs  | arrives  | price |
++------+-----------+-----------+----------+----------+-------+
+| 1643 | bangalore | Chennai   | 06:30:00 | 08:00:00 |  1900 |
+| 2340 | Mumbai    | Delhi     | 16:30:00 | 19:00:00 |  NULL |
+| 1289 | Guwahti   | Allahabad | 20:00:00 | 23:30:00 |  NULL |
+| 9825 | Hyderabad | Mangalore | 13:00:00 | 16:30:00 |  NULL |
++------+-----------+-----------+----------+----------+-------+
+4 rows in set (0.00 sec)
+
+7.
+mysql> delete from flights;
+Query OK, 4 rows affected (0.00 sec)
+
+8.
+mysql> alter table flights change price journey_price int(10);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc flights;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| flno          | int(10)     | NO   | PRI | NULL    |       |
+| fromplace     | varchar(20) | YES  |     | NULL    |       |
+| toplace       | varchar(20) | YES  |     | NULL    |       |
+| departs       | time        | YES  |     | NULL    |       |
+| arrives       | time        | YES  |     | NULL    |       |
+| journey_price | int(10)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select * from flights;
+Empty set (0.00 sec)
+
+
+
+
+
